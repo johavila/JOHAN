@@ -1,0 +1,53 @@
+	<body>
+		<h1 style="text-align: center;">Medico</h1>
+		<form action="" method="post">
+			<fieldset class="container">
+				<legend>Información del Medico</legend>
+				<div class="form-group col-xs-12">
+					<label for="">Tipo y numero de Documento de Identidad(*)</label>
+					<div class="input-group">
+						<select id="tipoDocumento" class="form-control" disabled="">
+						</select>
+						<span class="input-group-addon">-</span>
+						<input type="number" name="documentoIdentidad" placeholder="Numero de Identificación" class="form-control" disabled="">
+					</div>
+				</div>
+				<div class="form-group col-xs-12">
+					<label for="">Apellidos</label>
+					<div class="input-group">
+						<input type="text" name="primerApellido" placeholder="Primer Apellido (*)" class="form-control" disabled="">
+						<span class="input-group-addon">-</span>
+						<input type="text" name="segundoApellido" placeholder="Segundo Apellido" class="form-control" disabled="">
+					</div>
+				</div>
+				<div class="form-group col-xs-12">
+					<label for="">Nombres</label>
+					<div class="input-group">
+						<input type="text" name="primerNombre" placeholder="Primer Nombre (*)" class="form-control" disabled="">
+						<span class="input-group-addon">-</span>
+						<input type="text" name="segundoNombre" placeholder="Segundo Nombre" class="form-control" disabled="">
+					</div>
+				</div>
+				<div class="form-group col-xs-12">
+					<label for="">Tarjeta Profersional (*)</label>
+					<input type="number" name="tajetaProfesional" placeholder="Tarjeta Profesional" class="form-control" disabled="">
+				</div>
+				<div class="form-group col-xs-12">
+					<label for="">Especialidad (*)</label>
+					<select id="especialidad" class="form-control" disabled="">
+					</select>
+				</div>
+				<div class="form-group col-xs-12">
+					<label for="">Hora de Inicio y Finalización de labores</label>
+					<div class="input-group">
+						<span class="input-group-addon">Inicio:</span>
+						<input type="time" name="horaInicio" placeholder="Hora de Inicio" value="00:00:00" min="00:00:00" max="23:59:59" step="1" class="form-control">
+						<span class="input-group-addon">Final:</span>
+						<input type="time" name="horaFinal" placeholder="Hora Final" value="00:00:00" min="00:00:00" max="23:59:59" step="1" class="form-control">
+					</div>
+				</div>
+				<div class="form-group col-xs-12">
+					<input type="submit" name="actualizar" value="Actualizar" class="btn btn-primary btn-group-justified">
+				</div>
+			</fieldset>
+		</form>

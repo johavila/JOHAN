@@ -1,0 +1,40 @@
+	<body>
+		<div class="container">
+			
+			<center><h2>Cambio de contraseña</h2></center>
+			<form method="post" onsubmit="return cambiarContrasena();">
+			  <div class="input-group">
+			    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+			    <input type="password" class="form-control" id="password" placeholder="Ingrese nueva contraseña" autofocus required>
+			  </div>
+			  <div class="input-group">
+			    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+			    <input type="password" class="form-control" id="Rpassword" placeholder="Repita nueva contraseña" required>
+			  </div>
+			  <div>
+			  	<input type="submit" id="confirmar" class="btn btn-lg btn-primary btn-group-justified" value="Confirmar"> 
+			  </div>
+			</form>
+		</div>
+		<script type="text/javascript">
+			function cambiarContrasena(){
+				var password = document.getElementById('password').value;
+				var Rpassword = document.getElementById('Rpassword').value;
+				if(password == Rpassword){
+					var data = "cambiarContrasena&password="+password+"&Rpassword="+Rpassword;
+					ajax("/../controller/usuario.php",data, 2, function(){}, function(n){
+						if(n == 1){
+							bootstrap_alert.success('Se cambio la contraseña');
+							
+						}else if(n==0){
+							bootstrap_alert.danger('No se pudo cambiar la contraseña');
+						}else{
+							bootstrap_alert.danger('No se pudo cambiar la contraseña: '+n);
+						}
+					});
+				}else{
+					bootstrap_alert.danger('Las contraseñas no coinciden');
+				}
+				return false;
+			}
+		</script>

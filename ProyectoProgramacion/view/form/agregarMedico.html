@@ -1,0 +1,72 @@
+	<body>
+		<form action="" method="post" onsubmit="return registrarUsuario()">
+			<fieldset class="container">
+				<legend>Datos del Medico</legend>
+				<div class="form-group col-xs-12">
+					<label for="">Documento de Identidad(*)</label>
+					<input type="number" id="documentoIdentidad" placeholder="Numero de Identificación" class="form-control" required="">
+				</div>
+				<div class="form-group col-xs-12">
+					<label for="">Apellidos</label>
+					<div class="input-group">
+						<input type="text" id="apellido1" placeholder="Primer Apellido (*)" class="form-control" required="">
+						<span class="input-group-addon">-</span>
+						<input type="text" id="apellido2" placeholder="Segundo Apellido" class="form-control">
+					</div>
+				</div>
+				<div class="form-group col-xs-12">
+					<label for="">Nombres</label>
+					<div class="input-group">
+						<input type="text" id="nombre1" placeholder="Primer Nombre (*)" class="form-control" required="">
+						<span class="input-group-addon">-</span>
+						<input type="text" id="nombre2" placeholder="Segundo Nombre" class="form-control">
+					</div>
+				</div>
+				<div class="form-group col-xs-12">
+					<label for="">E-mail (*)</label>
+					<input type="email" id="email" placeholder="Correo Electronico" class="form-control" required="">
+				</div>
+				<div class="form-group col-xs-12">
+					<label for="">Tarjeta Profersional (*)</label>
+					<input type="number" id="tajetaProfesional" placeholder="Tarjeta Profesional" class="form-control" required="">
+				</div>
+				<div class="form-group col-xs-12">
+					<label for="">Especialidad (*)</label>
+					<select id="especialidad" class="form-control" required="">
+						<option value="0">--Elija una opción--</option>
+						<option value="1">Medico General</option>
+						<option value="2">Medico Internista</option>
+						<option value="3">Medico Especialista</option>
+					</select>
+				</div>
+				<div class="form-group col-xs-12">
+					<input type="submit" name="btnAgregarMedico" class="btn btn-primary btn-group-justified" value="Agregar Medico">
+				</div>
+			</fieldset>
+		</form>
+		<script type="text/javascript">
+			function registrarUsuario(){
+				var apellido1 = document.getElementById('apellido1').value;
+				var apellido2 = document.getElementById('apellido2').value;
+				var nombre1 = document.getElementById('nombre1').value;
+				var nombre2 = document.getElementById('nombre2').value;
+				var numeroDocumento = document.getElementById('documentoIdentidad').value;
+				var email = document.getElementById('email').value;
+				var tp = document.getElementById('tajetaProfesional').value;
+				var especialidad = document.getElementById('especialidad').value;
+
+				var data = "nuevoUsuarioMedico&numeroDocumento="+numeroDocumento+"&nombre1="+nombre1+"&nombre2="+nombre2+"&apellido1="+apellido1+"&apellido2="+apellido2+"&email="+email+"&tp="+tp+"&especialidad="+especialidad;
+
+				ajax("/../controller/usuario.php",data, 2, null, function(n){
+					if(n == 1){
+						bootstrap_alert.success('Se registro el usuario');
+						
+					}else if(n==0){
+						bootstrap_alert.danger('No se pudo registrar el usuario. Puede que ya exista un usuario con el mismo documento de identidad');
+					}else{
+						bootstrap_alert.danger('No se pudo registrar el usuario: '+n);
+					}      	
+		        });
+				return false;
+			}
+		</script>

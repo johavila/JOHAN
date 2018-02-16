@@ -1,0 +1,208 @@
+<body>
+	<div id="alert"></div>
+	<form  method="post" onsubmit="return registrarUsuario()"> 
+		<fieldset class="container">
+			<legend>Informacion Personal</legend>
+			<div class="form-group">
+				<label>Fecha y lugar de nacimiento (*)</label>
+				<div class="form-group col-xs-12">
+					<input type="date" id="fechaNacimiento" placeholder="Fecha de nacimiento" class="form-control" required="">	
+				</div>
+				<div class="form-group">
+					<div class="form-group col-xs-12">
+						<h5 class="col-md-3">Departamento:</h5>
+						<select id="dptosNacimiento" class="form-control" onchange="cargarMunicipios(this.value, 'municipioNacimiento')"></select>	
+					</div>
+					<div class="form-group col-xs-12">
+						<h5 class="col-md-3">Municipio:</h5>
+						<select  id="municipioNacimiento" class="form-control">
+							<option value="0">--Elija una opcion--</option>
+						</select>	
+					</div>
+				</div>
+			</div>
+			<div>
+				<label>Primer Apellido (*)</label>
+			</div>
+			<div class="form-group col-xs-12">
+				<input type="text" id="apellido1" placeholder="Primer Apellido" class="form-control" required="">
+			</div>
+			<div>
+				<label>Segundo Apellido</label>
+			</div>
+			<div class="form-group col-xs-12">
+				<input type="text" id="apellido2" placeholder="Segundo Apellido" class="form-control">
+			</div>
+			<div>
+				<label>Primer Nombre (*)</label>
+			</div>
+			<div class="form-group col-xs-12">
+				<input type="text" id="nombre1" placeholder="Primer Nombre" class="form-control" required="">
+			</div>
+			<div>
+				<label>Segundo Nombre</label>
+			</div>
+			<div class="form-group col-xs-12">
+				<input type="text" id="nombre2" placeholder="Segundo Nombre" class="form-control">
+			</div>
+			<div>
+				<label>Tipo de Documento (*)</label>
+			</div>
+			<div class="form-group col-xs-12">
+				<div class="input-group">
+					<select class="form-control" id="tipoDocumento" required="">
+						<option value="0">--Elija una opción--</option>
+						<option value="1">Cédula de Ciudadania</option>
+						<option value="2">Cédula de Extranjería</option>
+						<option value="3">Pasaporte</option>
+						<option value="4">Registro Civil</option>
+						<option value="5">Tarjeta de indentidad</option>
+					</select>	
+					<span class="input-group-addon">-</span>
+					<input type="number" id="identificacion" placeholder="Numero de Identificación" class="form-control" required="form-control" required="">
+				</div>
+			</div>
+			<div>
+				<label>E-mail (*)</label>
+			</div>
+			<div class="form-group col-xs-12">
+				<input type="email" id="email" placeholder="Correo Electronico" class="form-control" required="">
+			</div>
+			<div>
+				<label>Direccion (*)</label>
+			</div>
+			<div class="form-group col-xs-12">
+				<input type="text" id="direccion" placeholder="Direccion" class="form-control" required="">
+			</div>
+			<div>
+				<label>Sexo (*)</label>
+			</div>
+			<div class="form-group col-xs-11">
+				<div class="btn-group" data-toggle="buttons">
+					<label class="btn btn-primary active">
+						<input type="radio" name="genero" id="generoM" autocomplete="off" checked> Masculino
+					</label>
+					<label class="btn btn-primary">
+					    <input type="radio" name="genero" id="generoF" autocomplete="off"> Femenino
+					</label>
+				</div>
+			</div>
+			<div>
+				<label>Estado Civil (*)</label>
+			</div>
+			<div class="form-group col-xs-12">
+				<select id="estadoCivil" class="form-control">
+					<option selected="" value="0">--Elija una opcion--</option>
+					<option value="1">Soltero/a</option>
+					<option value="2">Casado/a</option>
+					<option value="3">Viudo/a</option>
+					<option value="4">Divorsiado/a</option>
+				</select>
+			</div>
+			<div>
+				<label for="">Estrato (*)</label>
+			</div>
+			<div class="form-group col-xs-12">
+				<input type="number" id="estrato" placeholder="Estrato" class="form-control" required="" max="6" min="1">
+			</div>
+			<div>
+				<label>Ubicación</label>
+			</div>
+			<div class="form-group">
+				<div class="form-group col-xs-12">
+					<p class="col-md-3">Departamento:</p>
+					<select id="dptos" class="form-control" onchange="cargarMunicipios(this.value, 'municipios')"></select>			
+				</div>
+				<div class="form-group col-xs-12">
+					<p class="col-md-3">Municipio:</p>
+					<select id="municipios" class="form-control">
+						<option value="0">--Elija una opcion--</option>
+					</select>			
+				</div>
+			</div>
+			<div>
+				<label>Telefonos</label>
+			</div>
+			<div class="form-group col-xs-12">
+				<div class="input-group col-xs-12">
+					<input type="text" id="telFijo" placeholder="Telefono Fijo" class="form-control">
+					<span class="input-group-addon">-</span>
+					<input type="text" id="telCelular" placeholder="Telefono Celular (*)" required="" class="form-control">
+				</div>
+			</div>
+			<div class="form-group col-xs-12">
+				<input type="submit" name="btnEnviar" value="Enviar Registro" class="btn btn-primary btn-group-justified">
+			</div>			
+		</fieldset>
+	</form>
+	<script type="text/javascript">
+		window.onload = function(){
+			var id, nombre;
+			var html = "<option value='0'>--Elija una opcion--</option>"; 
+			var select1 = document.getElementById('dptosNacimiento');
+			var select2 = document.getElementById('dptos');
+			ajax("/../controller/repositorio_informacion.php","departamentos", 1, null, function(xml){
+				if(xml!=null){
+	                var departamento = xml.getElementsByTagName('departamento');
+	                for (var i = 0; i < departamento.length; i++) {
+	                	id = departamento[i].getElementsByTagName('id')[0].innerHTML;
+	                	nombre = departamento[i].getElementsByTagName('nombre')[0].innerHTML;
+	                	html+="<option value='"+id+"'>"+nombre+"</option>\n";
+	                }
+	        	}
+	            select1.innerHTML=html;
+	            select2.innerHTML=html;
+	        });
+		}
+
+		function cargarMunicipios(idDepar, idSelec){
+			var select = document.getElementById(idSelec);
+			var id, nombre;
+			var data = "municipios=&idDepar="+idDepar;
+			var html = "<option value='0'>--Elija una opcion--</option>";
+			ajax("/../controller/repositorio_informacion.php",data, 1, null, function(xml){
+	            if(xml!=null){
+	            	var municipio = xml.getElementsByTagName('municipio');
+	                for (var i = 0; i < municipio.length; i++) {
+	                	id = municipio[i].getElementsByTagName('id')[0].innerHTML;
+	                	nombre = municipio[i].getElementsByTagName('nombre')[0].innerHTML;
+	                	html+="<option value='"+id+"'>"+nombre+"</option>\n";
+	                }
+	            }
+	            select.innerHTML=html;
+	        });
+		}
+
+		function registrarUsuario(){
+			var fechaNacimiento = document.getElementById('fechaNacimiento').value;
+			var lugarNacDepar = document.getElementById('dptosNacimiento').value;
+			var lugarNacMunic = document.getElementById('municipioNacimiento').value;
+			var apellido1 = document.getElementById('apellido1').value;
+			var apellido2 = document.getElementById('apellido2').value;
+			var nombre1 = document.getElementById('nombre1').value;
+			var nombre2 = document.getElementById('nombre2').value;
+			var tipoDocumento = document.getElementById('tipoDocumento').value;
+			var numeroDocumento = document.getElementById('identificacion').value;
+			var email = document.getElementById('email').value;
+			var direccion = document.getElementById('direccion').value;
+			var genero = document.getElementById('generoM').checked ? "M":"F";
+			var estadoCivil = document.getElementById('estadoCivil').value;
+			var estrato = document.getElementById('estrato').value;
+			var telFijo = document.getElementById('dptos').value;
+			var telCelular = document.getElementById('municipios').value;
+
+			var data = "nuevoUsuarioCliente&tipoDocumento="+tipoDocumento+"&numeroDocumento="+numeroDocumento+"&nombre1="+nombre1+"&nombre2="+nombre2+"&apellido1="+apellido1+"&apellido2="+apellido2+"&genero="+genero+"&direccion="+direccion+"&telefono="+telFijo+"&celular="+telCelular+"&email="+email+"&fechaNacimiento="+fechaNacimiento+"&lugarNacimientoDepar="+lugarNacDepar+"&lugarNacimientoCiudad="+lugarNacMunic+"&estrato="+estrato+"&estadoCivil="+estadoCivil;
+
+			ajax("/../controller/usuario.php",data, 2, null, function(n){
+				if(n == 1){
+					bootstrap_alert.success('Se registro el usuario');
+					
+				}else if(n==0){
+					bootstrap_alert.danger('No se pudo registrar el usuario. Puede que ya exista un usuario con el mismo documento de identidad');
+				}else{
+					bootstrap_alert.danger('No se pudo registrar el usuario: '+n);
+				}      	
+	        });
+			return false;
+		}
+	</script>

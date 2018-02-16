@@ -1,0 +1,17 @@
+paradigma logico
+
+*Builder-Creacion
+*prototype-Creacion
+*singleton-Creacion
+*factory-Creacion
+abstrac factory-Creacion
+
+*facade-Estructurales
+*decorator-Estructurales
+*adapter-Estructurales
+*bridge-Estructurales
+
+memento-Comportamiento
+
+MVC
+

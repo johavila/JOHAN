@@ -1,0 +1,19 @@
+Formulario agregar medico
+	Campos necesarios
+	-Documento de identidad
+	-nombres
+	-apellidos
+	-tarjeta profesional
+	-especialidad(Select opcional)
+
+Formulario verMedico
+	Campos necesarios
+	-La informacion personal(del formulario anterior. Esta debe estar en input que no se puedan editar)
+	-Hora de inicio de labores
+	-Hora de finalizacion de labores
+
+Formulario consultarPaciente
+	Campos necesarios
+	-Filtro por medio de su documento de identidad
+	-Una tabla con la informacion filtrada
+

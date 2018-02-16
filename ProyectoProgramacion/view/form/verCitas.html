@@ -1,0 +1,68 @@
+<body>
+	<div class="container">
+		<form  method="post"> 
+			<fieldset class="container">
+				<legend>Ver Citas</legend>
+			  	<table class="table">
+			    	<thead>
+			    		<tr>
+			        		<th>#</th>
+			        		<th>Medico</th>
+			        		<th>Fecha</th>
+			        		<th>Hora</th>
+			        		<th></th>
+			        		<th></th>
+			      		</tr>
+			    	</thead>
+			    	<tbody id="resultado"></tbody>
+			  	</table>
+			</fieldset>
+		</form>
+	</div>
+	<script type="text/javascript">
+		window.onload = function(){
+			cargarCitas();
+		}
+
+		function cargarCitas(){
+			var tbody = document.getElementById('resultado');
+			var html = "";
+			var data = "verCitas";
+			ajax("/../controller/cita.php",data, 1, function(){
+						tbody.innerHTML = '<tr><td colspan="5" align="center">Cargando...</td></tr>';
+				}, function(xml){
+	            if(xml!=null){
+	            	var cita = xml.getElementsByTagName('cita');
+	            	if(cita.length>0){
+	            		for (var i = 0; i < cita.length; i++) {
+	            			id = cita[i].getElementsByTagName('id')[0].innerHTML;
+	            			medico = cita[i].getElementsByTagName('medico')[0].innerHTML;
+		                	hora = cita[i].getElementsByTagName('hora')[0].innerHTML;
+		                	fecha = cita[i].getElementsByTagName('fecha')[0].innerHTML;
+		                	html+='<tr><td>'+(i+1)+'</td><td>'+medico+'</td><td>'+fecha+'</td><td>'+hora+'</td><td><a id="'+id+'" onclick="eliminarCita(this.id)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td></tr>';
+		                }
+	            	}else{
+	            		html = '<tr><td colspan="5" align="center">No hay resultados</td></tr>';
+	            	}
+	            }else{
+            		html = '<tr><td colspan="5" align="center">No hay resultados</td></tr>';
+	            }
+	            tbody.innerHTML = html;
+	        });
+		}
+
+		function eliminarCita(id){
+			var data = "eliminarCita&id="+id;
+			ajax("/../controller/cita.php",data, 2, null, function(n){
+	            if(n == 1){
+					bootstrap_alert.success('Se elimino la cita');
+					cargarCitas();
+					
+				}else if(n==0){
+					bootstrap_alert.danger('No se pudo eliminar la cita');
+				}else{
+					bootstrap_alert.danger('No se pudo eliminar la cita: '+n);
+				}     
+	        });
+		}
+	</script>

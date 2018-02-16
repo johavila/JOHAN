@@ -1,0 +1,54 @@
+	<body>
+		<fieldset>
+			<legend>Citas Programadas</legend>
+				<table class="table"> 
+					<thead> 
+				    	<tr> 
+				      		<th>#</th> 
+				    		<th>Nombre del Paciente</th> 
+				      		<th>Documento del Paciente</th>
+				      		<th>Fecha</th>  
+				      		<th>Hora</th> 
+				    	</tr> 
+				  	</thead> 
+				  	<tbody id="resultado"></tbody> 
+				</table> 
+		</fieldset>
+
+		<script type="text/javascript">
+			window.onload = function(){
+				cargarCitas();
+			}
+
+			function cargarCitas(){
+				var tbody = document.getElementById('resultado');
+				var html = "";
+				var data = "citasProgramadas";
+				ajax("/../controller/cita.php",data, 1, function(){
+							tbody.innerHTML = '<tr><td colspan="5" align="center">Cargando...</td></tr>';
+					}, function(xml){
+		            if(xml!=null){
+		            	var cita = xml.getElementsByTagName('cita');
+		            	if(cita.length>0){
+		            		for (var i = 0; i < cita.length; i++) {
+		            			paciente = cita[i].getElementsByTagName('paciente')[0].innerHTML;
+		            			documento = cita[i].getElementsByTagName('documento')[0].innerHTML;
+			                	hora = cita[i].getElementsByTagName('hora')[0].innerHTML;
+			                	fecha = cita[i].getElementsByTagName('fecha')[0].innerHTML;
+			                	actual = cita[i].getElementsByTagName('actual')[0].innerHTML;
+			                	n = "";
+			                	if(actual == 1){
+			                		n = 'class="success"';
+			                	}
+			                	html+='<tr '+n+'><td>'+(i+1)+'</td><td>'+paciente+'</td><td>'+documento+'</td><td>'+fecha+'</td><td>'+hora+'</td></tr>';
+			                }
+		            	}else{
+		            		html = '<tr><td colspan="5" align="center">No hay resultados</td></tr>';
+		            	}
+		            }else{
+	            		html = '<tr><td colspan="5" align="center">No hay resultados</td></tr>';
+		            }
+		            tbody.innerHTML = html;
+		        });
+			}
+		</script>

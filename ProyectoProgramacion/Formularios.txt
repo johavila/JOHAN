@@ -1,0 +1,11 @@
+-Apartar Cita
+	Campos requeridos
+	-Fecha de la cita
+	-Tabla con las horas disponibles
+
+-Ver citas
+	-Tabla
+		Columnas
+		-#
+		-Fecha Y Hora
+		-Columna sin nombre

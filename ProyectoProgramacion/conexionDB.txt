@@ -1,0 +1,8 @@
+Nombre de usuario MYSQL: rovijuor@gmail.com
+Contraseña de usuario: Abc1234!
+
+Host: sql10.freesqldatabase.com
+Database name: sql10174695
+Database user: sql10174695
+Database password: vS5BqTvlgZ
+Port number: 3306

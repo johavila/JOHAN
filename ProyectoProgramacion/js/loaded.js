@@ -1,0 +1,7 @@
+function mostrarLoader(){
+	
+}
+
+function ocultarLoader(){
+	
+}
